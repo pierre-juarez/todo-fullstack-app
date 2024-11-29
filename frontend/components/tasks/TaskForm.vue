@@ -5,11 +5,12 @@
       <form class="task-form-body" action="#" method="POST" @submit.prevent="submitTask">
         <div class="form-field">
           <label for="title" class="form-label">Título</label>
-          <input type="text" name="title" id="title" required class="form-input" />
+          <input v-model="task.title" type="text" name="title" id="title" required class="form-input" />
         </div>
         <div class="form-field">
           <label for="description" class="form-label">Descripción</label>
-          <textarea name="description" id="description" rows="3" required class="form-input"></textarea>
+          <textarea v-model="task.description" name="description" id="description" rows="3" required
+            class="form-input"></textarea>
         </div>
         <div>
           <button type="submit" class="form-submit-btn"> Agregar </button>
@@ -19,13 +20,24 @@
   </div>
 </template>
 <script setup>
+import { ref } from 'vue';
+import { useTaskStore } from '~/store/taskStore';
 
 
 const emit = defineEmits();
+const taskStore = useTaskStore();
+
+const task = ref({
+  title: '',
+  description: '',
+});
+
+
 
 const submitTask = () => {
-  console.log('New task created');
   emit('task-created');
+  taskStore.createTask(task.value);
+
 };
 
 </script>

@@ -14,10 +14,17 @@
   </div>
 </template>
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import TaskForm from '~/components/tasks/TaskForm.vue';
 import TaskList from '~/components/tasks/TaskList.vue';
 import BaseButton from '~/components/ui/BaseButton.vue';
+import { useTaskStore } from '~/store/taskStore';
+
+const taskStore = useTaskStore();
+
+onMounted(() => {
+  taskStore.fetchTasks();
+});
 
 const showForm = ref(false);
 

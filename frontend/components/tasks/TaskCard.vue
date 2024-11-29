@@ -20,12 +20,16 @@
     </div>
     <div class="task-card-footer">
       <div>
-        <BaseButton variant="process" size="small" icon="fa-play" v-tooltip="'Iniciar tarea'" />
-        <BaseButton variant="complete" size="small" icon="fa-circle-check" v-tooltip="'Completar tarea'" />
+        <BaseButton v-if="task.status === 'pending'" variant="process" size="small" icon="fa-play"
+          v-tooltip="'Iniciar tarea'" @click="startTask(task.id)" />
+        <BaseButton v-if="task.status === 'pending' || task.status === 'processed'" variant="complete" size="small"
+          icon="fa-circle-check" v-tooltip="'Completar tarea'" @click="completeTask(task.id)" />
       </div>
       <div class="task-actions">
-        <BaseButton variant="secondary" size="small" icon="fa-edit" v-tooltip="'Editar tarea'" />
-        <BaseButton variant="danger" size="small" icon="fa-trash" v-tooltip="'Eliminar tarea'" />
+        <BaseButton v-if="task.status !== 'completed'" variant="secondary" size="small" icon="fa-edit"
+          v-tooltip="'Editar tarea'" @click="editTask(task.id, task)" />
+        <BaseButton variant="danger" size="small" icon="fa-trash" v-tooltip="'Eliminar tarea'"
+          @click="deleteTask(task.id)" />
       </div>
     </div>
   </div>
@@ -33,17 +37,42 @@
 <script setup lang="ts">
 import { Task } from '~/types/task';
 import BaseButton from '../ui/BaseButton.vue';
-
+import { useTaskStore } from '~/store/taskStore';
 const props = defineProps({
   task: {
     type: Object as () => Task,
     required: true
   }
-})
+});
 
+// Acceder a la store de tareas
+const taskStore = useTaskStore();
 
+// Función para editar una tarea
+const editTask = (taskId: number, taskData: Task) => {
+  taskStore.updateTask(taskId, taskData);
+};
 
+// Función para eliminar una tarea
+const deleteTask = (taskId: number) => {
+  taskStore.deleteTask(taskId);
+};
 
+// Función para cambiar el estado de la tarea
+const changeTaskState = (taskId: number, newStatus: string) => {
+  // Enviar el ID y el nuevo estado para cambiarlo
+  taskStore.changeTaskStatus(taskId, newStatus);
+};
+
+// Función para iniciar tarea
+const startTask = (taskId: number) => {
+  changeTaskState(taskId, 'pending');
+};
+
+// Función para marcar tarea como completada
+const completeTask = (taskId: number) => {
+  changeTaskState(taskId, 'completed');
+};
 </script>
 <style scoped>
 .task-card {
