@@ -6,19 +6,19 @@ A continuación, encontrarás una guía paso a paso para instalar y ejecutar el 
 
 ---
 
-## **Frontend**
+## **Frontend** 🖥️
 
-### Tecnologías y Librerías Principales
+### Tecnologías y Librerías Principales 🔧
 
 - **Framework:** Nuxt 3
 - **Lenguaje:** TypeScript
 - **Librerías utilizadas:**
-  - [FontAwesome](https://fontawesome.com/) (iconos)
-  - [Axios](https://axios-http.com/) (para realizar solicitudes HTTP)
-  - [v-tooltip](https://v-tooltip.netlify.app/) (para mostrar tooltips en los componentes)
-  - [Pinia](https://pinia.vuejs.org/) (para la gestión del estado)
+  - [FontAwesome](https://fontawesome.com/) (iconos) 🖋️
+  - [Axios](https://axios-http.com/) (para realizar solicitudes HTTP) 🌐
+  - [v-tooltip](https://v-tooltip.netlify.app/) (para mostrar tooltips en los componentes) 💬
+  - [Pinia](https://pinia.vuejs.org/) (para la gestión del estado) 🧠
 
-### **Pasos para configurar y levantar el frontend**
+### **Pasos para configurar y levantar el frontend** 🚀
 
 1. **Clonar el repositorio**
 
@@ -53,19 +53,19 @@ A continuación, encontrarás una guía paso a paso para instalar y ejecutar el 
    npm run start
    ```
 
-## **Backend**
+## **Backend** 🖧
 
-### Tecnologías y Librerías Principales
+### Tecnologías y Librerías Principales 🔧
 
 - **Framework:** Node.js con Express
 - **Base de datos:** MongoDB
 - **Lenguaje:** Javascript
 - **Librerías utilizadas:**
-  - [Mongoose](https://mongoosejs.com/) (para interactuar con MongoDB)
-  - [cors](https://www.npmjs.com/package/cors) (para habilitar CORS en las solicitudes HTTP)
-  - [nodemon](https://www.npmjs.com/package/nodemon) (para reiniciar el servidor automáticamente en caso de cambios en el código)
+  - [Mongoose](https://mongoosejs.com/) (para interactuar con MongoDB) 🗄️
+  - [cors](https://www.npmjs.com/package/cors) (para habilitar CORS en las solicitudes HTTP) 🔐
+  - [nodemon](https://www.npmjs.com/package/nodemon) (para reiniciar el servidor automáticamente en caso de cambios en el código) 🔄
 
-### **Pasos para configurar y levantar el backend**
+### **Pasos para configurar y levantar el backend** 🚀
 
 1. **Clonar el repositorio**
 
@@ -87,7 +87,7 @@ A continuación, encontrarás una guía paso a paso para instalar y ejecutar el 
 4. **Levantar servidor de desarrollo** Usa el siguiente comando para iniciar el servidor en modo desarrollo (con nodemon):
 
    ```bash
-   npm run dev
+   npm start
    ```
 
    Esto iniciará el backend: http://localhost:5000 (Previamente, debes elegir este puerto, es opcional, pero dado que en el 3000 está el frontend, es mejor elegirlo).
@@ -99,7 +99,7 @@ A continuación, encontrarás una guía paso a paso para instalar y ejecutar el 
    npm run start
    ```
 
-## **Conexión entre el frontend y el backend**
+## **Conexión entre el frontend y el backend** 🔗
 
 - Asegúrate de levantar el backend, y que esté corriendo con normalidad.
 
@@ -117,3 +117,32 @@ A continuación, encontrarás una guía paso a paso para instalar y ejecutar el 
     En este caso, la ruta de la API es `/api/tasks`, y el backend ubicado en el puerto 5000.
 
     Cuando ambos servidores estén en ejecución, ambos podrán comunicarse.
+
+## **Implementación de GraphQL** ⚡
+
+Uno de los avances más significativos de este proyecto fue **integrar GraphQL** para la gestión de tareas. Esta implementación me permitió optimizar las consultas al servidor, ya que con GraphQL puedo obtener solo los datos que realmente necesito, en lugar de recibir una cantidad excesiva de datos como sucede en las API REST tradicionales.
+
+### **Beneficios de GraphQL frente a una API REST** 🚀
+
+1. **Consultas eficientes**: GraphQL permite hacer consultas más específicas, solicitando solo los campos necesarios, lo que reduce la sobrecarga de datos y mejora el rendimiento.
+2. **Menos peticiones**: Con una sola consulta, puedes obtener múltiples recursos, lo que reduce la cantidad de peticiones HTTP necesarias.
+3. **Esquema fuerte**: GraphQL proporciona un esquema muy estructurado y documentado que facilita el desarrollo y el mantenimiento del backend.
+
+### **Mi experiencia con GraphQL** 📚
+
+Siempre quise trabajar con **GraphQL** debido a su flexibilidad y poder. Para aprender más sobre esta tecnología, leí la documentación oficial en [Apollo GraphQL](https://www.apollographql.com/docs). Esto me permitió entender cómo manejar las consultas, mutaciones y suscripciones de manera eficiente.
+
+Además, durante la implementación, me encontré con un problema relacionado con las consultas y la caché en los foros de **GitHub**. Después de investigar y experimentar, pude solucionarlo. Esto fue una gran oportunidad para aprender a manejar y resolver problemas comunes que pueden surgir en proyectos con GraphQL.
+
+### **Cómo aprendí GraphQL** 📖
+
+Mi aprendizaje de **GraphQL** fue un proceso gradual que involucró tanto la lectura de documentación oficial como la visualización de tutoriales y ejemplos prácticos. Comencé con los siguientes pasos:
+
+1. **Documentación de Apollo GraphQL**: La documentación oficial me proporcionó una base sólida sobre cómo usar GraphQL, entender su esquema y cómo estructurar las consultas.
+2. **Tutoriales en video**: Para comprender mejor cómo implementar GraphQL en un proyecto real, vi videos en YouTube que mostraban ejemplos de integración de GraphQL con **Apollo Client** y **Apollo Server**.
+
+3. **Ejemplos prácticos**: Me ayudó mucho trabajar con ejemplos prácticos donde podía implementar consultas y mutaciones en el frontend y backend, (en este caso las mutaciones no fueron necesarias), viendo los resultados directamente en el navegador y solucionando problemas a medida que surgían.
+
+A lo largo de este proceso, también consulté muchos foros como **Stack Overflow** y **GitHub Issues** para resolver problemas técnicos específicos. Por ejemplo, me encontré con un inconveniente en uno de los módulos de exportación en **Apollo Client**, que resolví después de revisar las respuestas en los foros. Esto me permitió aprender cómo solucionar problemas prácticos en la implementación de **GraphQL**.
+
+---
