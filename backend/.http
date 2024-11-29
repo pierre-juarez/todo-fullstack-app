@@ -1,0 +1,49 @@
+## BACKEND TODO APP
+
+### GET: Obtener todas las tareas
+GET http://localhost:5000/api/tasks
+Accept: application/json
+
+###
+
+### POST: Crear una nueva tarea
+POST http://localhost:5000/api/tasks HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "title": "Nueva Tarea 2",
+  "description": "Descripción de la tarea 2"
+}
+
+###
+
+### PUT: Actualizar una tarea por su ID
+PUT http://localhost:5000/api/tasks/6749591491310a9df03501f0 HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "title": "Tarea actualizada",
+  "description": "Nueva descripción"
+}
+
+###
+
+### PUT: Cambiar el estado de una tarea por su ID
+PUT http://localhost:5000/api/tasks/6749591491310a9df03501f0 HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "status": "completed"
+}
+
+###
+
+### DELETE: Eliminar una tarea por su ID
+DELETE http://localhost:5000/api/tasks/63f8e8b2c6f8a1283f7e0f9a HTTP/1.1
+Accept: application/json
+
+###
+
