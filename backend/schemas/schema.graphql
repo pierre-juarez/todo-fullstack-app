@@ -1,0 +1,13 @@
+type Task {
+  _id: ID!
+  title: String!
+  description: String
+  status: String!
+  createdAt: String
+  updatedAt: String
+}
+
+type Query {
+  tasks(status: String, search: String): [Task!]! # Filtrar por estado y búsqueda
+  task(_id: ID!): Task # Obtener una tarea por su ID
+}
