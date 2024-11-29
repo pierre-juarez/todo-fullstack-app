@@ -21,15 +21,15 @@
     <div class="task-card-footer">
       <div>
         <BaseButton v-if="task.status === 'pending'" variant="process" size="small" icon="fa-play"
-          v-tooltip="'Iniciar tarea'" @click="startTask(task.id)" />
+          v-tooltip="'Iniciar tarea'" @click="startTask(task._id)" />
         <BaseButton v-if="task.status === 'pending' || task.status === 'processed'" variant="complete" size="small"
-          icon="fa-circle-check" v-tooltip="'Completar tarea'" @click="completeTask(task.id)" />
+          icon="fa-circle-check" v-tooltip="'Completar tarea'" @click="completeTask(task._id)" />
       </div>
       <div class="task-actions">
         <BaseButton v-if="task.status !== 'completed'" variant="secondary" size="small" icon="fa-edit"
-          v-tooltip="'Editar tarea'" @click="editTask(task.id, task)" />
+          v-tooltip="'Editar tarea'" @click="editTask(task._id, task)" />
         <BaseButton variant="danger" size="small" icon="fa-trash" v-tooltip="'Eliminar tarea'"
-          @click="deleteTask(task.id)" />
+          @click="deleteTask(task._id)" />
       </div>
     </div>
   </div>
@@ -45,32 +45,25 @@ const props = defineProps({
   }
 });
 
-// Acceder a la store de tareas
 const taskStore = useTaskStore();
 
-// Función para editar una tarea
-const editTask = (taskId: number, taskData: Task) => {
-  taskStore.updateTask(taskId, taskData);
+const editTask = async (taskId: string, taskData: Task) => {
+  await taskStore.updateTask(taskId, taskData);
 };
 
-// Función para eliminar una tarea
-const deleteTask = (taskId: number) => {
-  taskStore.deleteTask(taskId);
+const deleteTask = async (taskId: string) => {
+  await taskStore.deleteTask(taskId);
 };
 
-// Función para cambiar el estado de la tarea
-const changeTaskState = (taskId: number, newStatus: string) => {
-  // Enviar el ID y el nuevo estado para cambiarlo
-  taskStore.changeTaskStatus(taskId, newStatus);
+const changeTaskState = async (taskId: string, newStatus: string) => {
+  await taskStore.updateTask(taskId, { status: newStatus });
 };
 
-// Función para iniciar tarea
-const startTask = (taskId: number) => {
-  changeTaskState(taskId, 'pending');
+const startTask = (taskId: string) => {
+  changeTaskState(taskId, 'processed');
 };
 
-// Función para marcar tarea como completada
-const completeTask = (taskId: number) => {
+const completeTask = (taskId: string) => {
   changeTaskState(taskId, 'completed');
 };
 </script>

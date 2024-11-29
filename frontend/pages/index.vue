@@ -10,7 +10,9 @@
         <TaskForm @task-created="handleTaskCreated" />
       </div>
     </Transition>
-    <TaskList />
+    <div v-if="taskStore.isLoading" class="loading">Obteniendo listado de tareas👀...</div>
+    <div v-if="taskStore.error" class="error">{{ taskStore.error }}😔</div>
+    <TaskList :tasks="taskStore.tasks" />
   </div>
 </template>
 <script setup>
@@ -22,8 +24,8 @@ import { useTaskStore } from '~/store/taskStore';
 
 const taskStore = useTaskStore();
 
-onMounted(() => {
-  taskStore.fetchTasks();
+onMounted(async () => {
+  await taskStore.fetchTasks();
 });
 
 const showForm = ref(false);
@@ -39,7 +41,7 @@ const handleTaskCreated = () => {
 </script>
 <style scoped>
 .todo-dashboard {
-  @apply bg-blue-50 mx-auto px-4 py-8;
+  @apply bg-blue-50 mx-auto px-4 py-8 h-screen;
 }
 
 .title-todo {
@@ -73,5 +75,13 @@ const handleTaskCreated = () => {
 .accordion-enter-to,
 .accordion-leave-from {
   @apply opacity-100 h-auto;
+}
+
+.loading {
+  @apply text-center text-2xl text-blue-500 font-semibold;
+}
+
+.error {
+  @apply text-center text-2xl text-red-500 font-semibold;
 }
 </style>

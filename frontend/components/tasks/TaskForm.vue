@@ -34,9 +34,9 @@ const task = ref({
 
 
 
-const submitTask = () => {
+const submitTask = async () => {
   emit('task-created');
-  taskStore.createTask(task.value);
+  await taskStore.createTask(task.value);
 
 };
 
