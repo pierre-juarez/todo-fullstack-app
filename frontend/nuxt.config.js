@@ -38,8 +38,12 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: ["@nuxtjs/dotenv"],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+  env: {
+    NUXT_API_BACKEND: process.env.API_BACKEND,
+    NUXT_API_GRAPHQL: process.env.API_GRAPHQL,
+  },
 };

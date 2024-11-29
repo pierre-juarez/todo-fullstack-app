@@ -6,22 +6,26 @@ import {
   GET_TASKS_BY_STATUS,
   GET_TASKS_QUERY,
 } from "~/queries/queries";
+import dotenv from "dotenv";
+
+dotenv.config(); // Environment variables
 
 class TaskService {
   private apiClient = axios.create({
-    baseURL: "http://localhost:5000/api/tasks",
+    baseURL: process.env.NUXT_API_BACKEND,
     headers: {
       "Content-Type": "application/json",
     },
   });
 
   private apolloClient = new ApolloClient({
-    uri: "http://localhost:5000/graphql",
+    uri: process.env.NUXT_API_GRAPHQL,
     cache: new InMemoryCache(),
   });
 
   async fetchTasks(): Promise<Task[]> {
     try {
+      console.log("API_BACKEND", process.env.NUXT_API_BACKEND);
       const response = await this.apiClient.get("/");
       return response.data;
     } catch (error) {
