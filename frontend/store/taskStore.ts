@@ -64,5 +64,46 @@ export const useTaskStore = defineStore("tasks", {
         this.isLoading = false;
       }
     },
+
+    async fetchTaskById(id: string) {
+      this.isLoading = true;
+      this.error = null;
+      try {
+        const task = await taskService.fetchTaskById(id);
+        this.tasks = [task];
+      } catch (error) {
+        console.error("Error al obtener tarea por ID:", error);
+        this.error = "Error al obtener tarea por ID";
+      } finally {
+        this.isLoading = false;
+      }
+    },
+
+    async fetchTasksBySearch(search: string) {
+      this.isLoading = true;
+      this.error = null;
+      try {
+        console.log("search", search);
+        this.tasks = await taskService.fetchTasksBySearch(search);
+      } catch (error) {
+        console.error("Error al obtener tareas por parámetro:", error);
+        this.error = "Error al obtener tareas por parámetro";
+      } finally {
+        this.isLoading = false;
+      }
+    },
+
+    async fetchTasksByStatus(status: string) {
+      this.isLoading = true;
+      this.error = null;
+      try {
+        this.tasks = await taskService.fetchTasksByStatus(status);
+      } catch (error) {
+        console.error("Error al obtener tareas por estado:", error);
+        this.error = "Error al obtener tareas por estado";
+      } finally {
+        this.isLoading = false;
+      }
+    },
   },
 });

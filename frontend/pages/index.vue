@@ -10,6 +10,15 @@
         <TaskForm @task-created="handleTaskCreated" />
       </div>
     </Transition>
+    <div class="filters">
+      <input class="search-input" v-model="search" @input="searchTasks" type="text" placeholder="Buscar tareas..." />
+      <select class="search-select" v-model="status" @change="filterTasksByStatus">
+        <option value="" selected>Todas</option>
+        <option value="pending">Pendientes</option>
+        <option value="processed">En proceso</option>
+        <option value="completed">Completadas</option>
+      </select>
+    </div>
     <div v-if="taskStore.isLoading" class="loading">Obteniendo listado de tareas👀...</div>
     <div v-if="taskStore.error" class="error">{{ taskStore.error }}😔</div>
     <TaskList :tasks="taskStore.tasks" />
@@ -23,6 +32,8 @@ import BaseButton from '~/components/ui/BaseButton.vue';
 import { useTaskStore } from '~/store/taskStore';
 
 const taskStore = useTaskStore();
+const search = ref('');
+const status = ref('');
 
 onMounted(async () => {
   await taskStore.fetchTasks();
@@ -36,6 +47,14 @@ const toggleForm = () => {
 
 const handleTaskCreated = () => {
   showForm.value = false;
+};
+
+const searchTasks = () => {
+  taskStore.fetchTasksBySearch(search.value);
+};
+
+const filterTasksByStatus = () => {
+  taskStore.fetchTasksByStatus(status.value);
 };
 
 </script>
@@ -83,5 +102,17 @@ const handleTaskCreated = () => {
 
 .error {
   @apply text-center text-2xl text-red-500 font-semibold;
+}
+
+.filters {
+  @apply flex gap-4 mb-4 justify-center items-center
+}
+
+.search-input {
+  @apply p-4 text-base border border-gray-300 rounded-md w-1/3 my-4 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500
+}
+
+.search-select {
+  @apply p-4 text-base border border-gray-300 rounded-md focus:outline-none focus:ring-1
 }
 </style>

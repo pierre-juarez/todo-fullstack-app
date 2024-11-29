@@ -1,5 +1,11 @@
 import axios from "axios";
 import { Task } from "../types/task";
+import { ApolloClient, gql, InMemoryCache } from "@apollo/client/core";
+import {
+  GET_TASK_BY_ID,
+  GET_TASKS_BY_STATUS,
+  GET_TASKS_QUERY,
+} from "~/queries/queries";
 
 class TaskService {
   private apiClient = axios.create({
@@ -7,6 +13,11 @@ class TaskService {
     headers: {
       "Content-Type": "application/json",
     },
+  });
+
+  private apolloClient = new ApolloClient({
+    uri: "http://localhost:5000/graphql",
+    cache: new InMemoryCache(),
   });
 
   async fetchTasks(): Promise<Task[]> {
@@ -58,6 +69,32 @@ class TaskService {
       console.error("Error updating task:", error);
       throw error;
     }
+  }
+
+  async fetchTaskById(id: string): Promise<Task> {
+    const { data, error } = await this.apolloClient.query({
+      query: gql(GET_TASK_BY_ID(id)),
+    });
+    console.log("data", data);
+    if (error) throw new Error("Error al obtener tarea por ID");
+    return data.data.task;
+  }
+
+  async fetchTasksByStatus(status: string): Promise<Task[]> {
+    const { data, error } = await this.apolloClient.query({
+      query: gql(GET_TASKS_BY_STATUS(status)),
+    });
+    if (error) throw new Error("Error al obtener tareas por estado");
+    return data.tasks;
+  }
+
+  async fetchTasksBySearch(search: string): Promise<Task[]> {
+    const { data, error } = await this.apolloClient.query({
+      query: gql(GET_TASKS_QUERY(search)),
+    });
+
+    if (error) throw new Error("Error al obtener tareas por búsqueda");
+    return data.tasks;
   }
 }
 

@@ -13,9 +13,14 @@
       }"> {{ task.status }} </div>
     </div>
     <p class="task-description">{{ task.description }}</p>
-    <div class="flex  justify-end">
+    <div class="flex justify-end">
       <div class="task-metadata">
-        <span class="task-date"> {{ task.createdAt }} </span>
+        <span class="task-date">Creado: {{ formatDate(task.createdAt) }} </span>
+      </div>
+    </div>
+    <div class="flex justify-end">
+      <div class="task-metadata">
+        <span class="task-date">Actualizado: {{ formatDate(task.updatedAt) }} </span>
       </div>
     </div>
     <div class="task-card-footer">
@@ -38,7 +43,7 @@
 import { Task } from '~/types/task';
 import BaseButton from '../ui/BaseButton.vue';
 import { useTaskStore } from '~/store/taskStore';
-const props = defineProps({
+defineProps({
   task: {
     type: Object as () => Task,
     required: true
@@ -66,6 +71,26 @@ const startTask = (taskId: string) => {
 const completeTask = (taskId: string) => {
   changeTaskState(taskId, 'completed');
 };
+
+const formatDate = (date: string) => {
+  const parsedDate = new Date(date);  // Convertir a objeto Date
+
+  const day = parsedDate.getDate();
+  const month = parsedDate.toLocaleString('default', { month: 'short' });  // Mes abreviado
+  const year = parsedDate.getFullYear();
+
+  let hours = parsedDate.getHours();
+  const minutes = parsedDate.getMinutes();
+  const ampm = hours >= 12 ? 'pm' : 'am';
+
+  // Convertimos hora de 24h a 12h
+  hours = hours % 12;
+  hours = hours ? hours : 12;  // Si es 0 (medianoche), mostramos 12
+  const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+
+  // Formato final de la fecha
+  return `${day}, ${month}, ${year} - ${hours}:${formattedMinutes} ${ampm}`;
+}
 </script>
 <style scoped>
 .task-card {
